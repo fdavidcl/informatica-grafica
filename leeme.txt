@@ -1,0 +1,32 @@
+Informática Gráfica - Práctica 1
+=============================================
+
+Sistema operativo utilizado
+---------------------------------------------
+Linux (Arch Linux)
+Compilador: g++ (GCC) 5.2.0
+
+
+Teclas
+---------------------------------------------
+ * [ ] (tecla espacio): Cambia de objeto (rota entre cubo - tetraedro - cono -
+   cilindro)
+ * [A]: Modo de visualización de puntos
+ * [S]: Modo de visualización de líneas
+ * [D]: Modo de visualización de relleno
+ * [F]: Modo de visualización de ajedrez
+ * [1-9,0]: Modifica el número de triángulos usados en las mallas del cono y del
+   cilindro
+
+
+Extensiones
+---------------------------------------------
+ * Se han implementado el cono y el cilindro como las clases `Cono` y `Cilindro`
+   derivadas de MallaInd.
+ * La declaración de las clases está en `practica1.hpp` y se implementan en
+   `practica1.cpp`.
+ * El constructor de `Cono` y `Cilindro` acepta un parámetro de precisión para
+   aumentar o reducir el número de triángulos utilizados para construir la malla
+   que aproxime las figuras.
+ * La modificación de la precisión se gestiona desde `P1_FGE_PulsarTeclaNormal`
+   aceptando las teclas numéricas del 1 al 0.
