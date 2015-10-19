@@ -34,4 +34,14 @@ public:
   Cilindro(unsigned prec);
 };
 
+class Toro : public MallaInd {
+private:
+  // Calcula el vértice (x, y, z) a partir de las ecuaciones paramétricas
+  double rad_int,
+    rad_ext;
+  Tupla3f vertice(double theta, double phi);
+public:
+  Toro(double R, double r, unsigned prec);
+};
+
 #endif

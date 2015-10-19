@@ -18,6 +18,11 @@ unsigned objeto_activo = 0; // objeto activo: cubo (0), tetraedro (1), otros....
 std::vector<MallaInd> figuras;
 unsigned material, precision;
 
+// Configuración del torp
+const double
+  DEFAULT_MAJOR_RADIUS = 3,
+  DEFAULT_MINOR_RADIUS = 2;
+
 // ---------------------------------------------------------------------
 // Función para implementar en la práctica 1 para inicialización.
 // Se llama una vez al inicio, cuando ya se ha creado la ventana e
@@ -30,6 +35,7 @@ void P1_Inicializar(int argc, char *argv[]) {
   figuras.push_back(Tetraedro());
   figuras.push_back(Cono(precision));
   figuras.push_back(Cilindro(precision));
+  figuras.push_back(Toro(DEFAULT_MAJOR_RADIUS, DEFAULT_MINOR_RADIUS, precision));
 }
 
 // ---------------------------------------------------------------------
@@ -47,6 +53,7 @@ bool P1_FGE_PulsarTeclaNormal(unsigned char tecla) {
     precision = tecla - '0' + 10 * (tecla == '0');
     figuras[2] = Cono(precision);
     figuras[3] = Cilindro(precision);
+    figuras[4] = Toro(DEFAULT_MAJOR_RADIUS, DEFAULT_MINOR_RADIUS, precision);
   }
   else if (tecla == ' ') {
     ++objeto_activo %= figuras.size();
@@ -174,4 +181,44 @@ Cilindro::Cilindro(unsigned prec) {
     // Triángulo con base arriba
     indexes.push_back(Tupla3i(N + i, (i + 1)%N, N + (i + 1)%N));
   }
+}
+
+Tupla3f Toro::vertice(double theta, double phi) {
+  return Tupla3f(
+    (rad_ext + rad_int * cos(theta)) * cos(phi),
+    (rad_ext + rad_int * cos(theta)) * sin(phi),
+    rad_int * sin(theta)
+  );
+}
+
+Toro::Toro(double R, double r, unsigned prec)
+  :rad_ext(R), rad_int(r) {
+  const unsigned N = 10 * prec;
+  const double TAU = 6.2831853; // τ = 2π
+
+  // Añadimos vértices con la precisión dada
+  for (unsigned i = 0; i < N; ++i) {
+    double theta = (double)(i) / N * TAU;
+
+    // Vértices i*N a i*N + (N - 1)
+    for (unsigned j = 0; j < N; ++j) {
+      // Vértice i*N + j
+      double phi = (double)(j) / N * TAU;
+
+      vertex_coords.push_back(vertice(theta, phi));
+    }
+  }
+
+  // Añadimos caras
+  // Recorriendo círculo exterior
+  for (unsigned i = 0; i < N; ++i) {
+    // Recorriendo círculo interior
+    for (unsigned j = 0; j < N; ++j) {
+      // Unir cada punto del círculo con el que está en la misma posición en
+      // el siguiente círculo y con los adyacentes
+      indexes.push_back(Tupla3i(i*N + j, ((i + 1)%N)*N + j, i*N + (j + 1)%N));
+      indexes.push_back(Tupla3i(((i + 1)%N)*N + j, ((i + 1)%N)*N + (j + 1)%N, i * N + (j + 1)%N));
+    }
+  }
+
 }
