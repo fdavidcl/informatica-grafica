@@ -36,12 +36,19 @@ public:
 
 class Toro : public MallaInd {
 private:
-  // Calcula el vértice (x, y, z) a partir de las ecuaciones paramétricas
   double rad_int,
     rad_ext;
+  // Calcula el vértice (x, y, z) a partir de las ecuaciones paramétricas
   Tupla3f vertice(double theta, double phi);
 public:
   Toro(double R, double r, unsigned prec);
+};
+
+class Moebius : public MallaInd {
+private:
+  Tupla3f vertice(double u, double v);
+public:
+  Moebius(unsigned prec);
 };
 
 #endif

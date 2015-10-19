@@ -36,6 +36,7 @@ void P1_Inicializar(int argc, char *argv[]) {
   figuras.push_back(Cono(precision));
   figuras.push_back(Cilindro(precision));
   figuras.push_back(Toro(DEFAULT_MAJOR_RADIUS, DEFAULT_MINOR_RADIUS, precision));
+  figuras.push_back(Moebius(precision));
 }
 
 // ---------------------------------------------------------------------
@@ -54,6 +55,7 @@ bool P1_FGE_PulsarTeclaNormal(unsigned char tecla) {
     figuras[2] = Cono(precision);
     figuras[3] = Cilindro(precision);
     figuras[4] = Toro(DEFAULT_MAJOR_RADIUS, DEFAULT_MINOR_RADIUS, precision);
+    figuras[5] = Moebius(precision);
   }
   else if (tecla == ' ') {
     ++objeto_activo %= figuras.size();
@@ -219,6 +221,52 @@ Toro::Toro(double R, double r, unsigned prec)
       indexes.push_back(Tupla3i(i*N + j, ((i + 1)%N)*N + j, i*N + (j + 1)%N));
       indexes.push_back(Tupla3i(((i + 1)%N)*N + j, ((i + 1)%N)*N + (j + 1)%N, i * N + (j + 1)%N));
     }
+  }
+
+}
+
+Tupla3f Moebius::vertice(double u, double v) {
+  return Tupla3f(
+    (1 + (v - 1)/2 * cos(u/2)) * cos(u),
+    (1 + (v - 1)/2 * cos(u/2)) * sin(u),
+    (v - 1)/2 * sin(u/2)
+  );
+}
+
+Moebius::Moebius(unsigned prec) {
+  const unsigned N = 10 * prec;
+  const double TAU = 6.2831853; // τ = 2π
+
+  const double LIMIT_U = TAU;
+  const double LIMIT_V = 2;
+
+  // Añadimos vértices con la precisión dada
+  for (unsigned i = 0; i < N; ++i) {
+    double u = (double)(i) / N * LIMIT_U;
+
+    // Vértices i*N a i*N + (N - 1)
+    for (unsigned j = 0; j < N; ++j) {
+      // Vértice i*N + j
+      double v = (double)(j) / N * LIMIT_V;
+
+      vertex_coords.push_back(vertice(u, v));
+    }
+  }
+
+  // Añadimos caras
+  for (unsigned i = 0; i < N - 1; ++i) {
+    for (unsigned j = 0; j < N - 1; ++j) {
+      // Unir cada punto del círculo con el que está en la misma posición en
+      // el siguiente círculo y con los adyacentes
+      indexes.push_back(Tupla3i(i*N + j, ((i + 1)%N)*N + j, i*N + (j + 1)%N));
+      indexes.push_back(Tupla3i(((i + 1)%N)*N + j, ((i + 1)%N)*N + (j + 1)%N, i * N + (j + 1)%N));
+    }
+  }
+
+  // La última fila de vértices hay que unirla con los opuestos de la primera!
+  for (unsigned j = 0; j < N - 1; ++j) {
+    indexes.push_back(Tupla3i((N - 1)*N + j, (N - j - 1)%N, (N - 1)*N + (j + 1)%N));
+    indexes.push_back(Tupla3i((N - j - 2)%N, (N - j - 1)%N, (N - 1) * N + (j + 1)%N));
   }
 
 }
