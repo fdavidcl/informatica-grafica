@@ -20,8 +20,8 @@ unsigned material, precision;
 
 // Configuración del torp
 const double
-  DEFAULT_MAJOR_RADIUS = 3,
-  DEFAULT_MINOR_RADIUS = 2;
+  DEFAULT_MAJOR_RADIUS = 1,
+  DEFAULT_MINOR_RADIUS = 0.5;
 
 // ---------------------------------------------------------------------
 // Función para implementar en la práctica 1 para inicialización.
@@ -57,8 +57,11 @@ bool P1_FGE_PulsarTeclaNormal(unsigned char tecla) {
     figuras[4] = Toro(DEFAULT_MAJOR_RADIUS, DEFAULT_MINOR_RADIUS, precision);
     figuras[5] = Moebius(precision);
   }
-  else if (tecla == ' ') {
+  else if (tecla == ' ' || tecla == '.') {
     ++objeto_activo %= figuras.size();
+  }
+  else if (tecla == ',') {
+    objeto_activo = (objeto_activo + figuras.size() - 1)% figuras.size();
   }
   else {
     return false;
