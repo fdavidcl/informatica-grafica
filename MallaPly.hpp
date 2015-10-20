@@ -2,7 +2,7 @@
 #define __MALLA_PLY
 #include "MallaInd.hpp"
 
-class MallaPly : MallaInd {
+class MallaPly : public MallaInd {
 public:
   MallaPly(const char * filename);
 };
