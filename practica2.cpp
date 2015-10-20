@@ -12,7 +12,7 @@
 #include "MallaPly.hpp"
 #include "MallaRev.hpp"
 #include <cmath>
-#include <cstring>
+#include <string>
 #include <sstream>
 
 unsigned p2_objeto_activo = 0;
@@ -26,26 +26,26 @@ MallaInd * p2_figuras[2];
 // incializado OpenGL.
 
 void P2_Inicializar(int argc, char *argv[]) {
-  char * ply_file, * rev_file;
+  std::string ply_file, rev_file;
   unsigned perfiles = 10;
 
-  if (argc == 0) {
-    strcpy(ply_file, "../plys/beethoven.ply");
-  } else {
-    strcpy(ply_file, argv[0]);
-  }
   if (argc < 2) {
-    strcpy(rev_file, "../plys/peon.ply");
+    ply_file = "../plys/beethoven.ply";
   } else {
-    strcpy(rev_file, argv[1]);
+    ply_file = argv[1];
   }
-  if (argc >= 3) {
+  if (argc < 3) {
+    rev_file = "../plys/peon.ply";
+  } else {
+    rev_file = argv[2];
+  }
+  if (argc >= 4) {
     std::stringstream conversor(argv[2]);
     conversor >> perfiles;
   }
 
-  p2_figuras[0] = new MallaPly(ply_file);
-  p2_figuras[1] = new MallaRevol(rev_file, perfiles);
+  p2_figuras[0] = new MallaPly(ply_file.c_str());
+  p2_figuras[1] = new MallaRevol(rev_file.c_str(), perfiles);
 }
 
 // ---------------------------------------------------------------------
