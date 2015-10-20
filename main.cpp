@@ -20,6 +20,7 @@
 
 // includes de archivos en el directorio de trabajo (de las prácticas)
 #include "practica1.hpp"
+#include "practica2.hpp"
 
 // evita la necesidad de escribir std::
 using namespace std ;
@@ -61,6 +62,8 @@ int
 unsigned
    modo_vis  ,  // modo de visualización (0,1,3,4)
    practica_actual ;  // practica actual (cambiable por teclado) (1,2,3,4,5)
+
+const unsigned NUM_PRACTICAS = 2;
 
 // *********************************************************************
 // **
@@ -180,6 +183,10 @@ void DibujarObjetos()
          break ;
       // falta: case 2: ... case 3: ..... case 4: ..... case 5: .....
       //
+      case 2:
+         P2_DibujarObjetos(modo_vis);
+         break;
+
       default :
          cout << "El valor de 'practica_actual' (" << practica_actual  << ") es incorrecto" << endl ;
          break ;
@@ -237,6 +244,11 @@ void FGE_PulsarTeclaNormal( unsigned char tecla, int x_raton, int y_raton )
    bool redibujar = true ; // true si al acabar de procesar el evento resulta que es necesario redibujar
    switch (toupper(tecla))
    {
+      case 13: // Tecla ENTER
+        practica_actual = 1 + practica_actual % NUM_PRACTICAS;
+        std::cerr << "Cambiando práctica a " << practica_actual << std::endl;
+        break;
+
       // Modo visualización: puntos, líneas, relleno y ajedrez
       case 'A':
         modo_vis = 0;
@@ -268,6 +280,10 @@ void FGE_PulsarTeclaNormal( unsigned char tecla, int x_raton, int y_raton )
                redibujar = P1_FGE_PulsarTeclaNormal( tecla ) ; // true si es necesario redibujar
                break ;
             // falta: case 2, case 3, etc....
+            case 2:
+               redibujar = P2_FGE_PulsarTeclaNormal(tecla);
+               break;
+
             default :
                redibujar = false ; // la tecla no es de la práctica activa (no es necesario redibujar)
          }
@@ -386,7 +402,7 @@ void Inicializa_Vars( )
    camara_angulo_y = 0.0 ;
 
    // inicializar práctica actual y modo de visualización inicial
-   practica_actual = 1 ;
+   practica_actual = 2 ;
    modo_vis = 0 ;
 }
 
@@ -452,6 +468,9 @@ void Inicializar( int argc, char *argv[] )
 
    // inicializar práctica 1.
    P1_Inicializar( argc, argv ) ;
+
+   // inicializar práctica 1.
+   P2_Inicializar( argc, argv ) ;
 }
 
 // *********************************************************************
