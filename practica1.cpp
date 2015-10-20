@@ -51,6 +51,8 @@ void P1_Inicializar(int argc, char *argv[]) {
 //    cambiado nada)
 
 bool P1_FGE_PulsarTeclaNormal(unsigned char tecla) {
+  tecla = tolower(tecla);
+
   if (tecla >= '0' && tecla <= '9') {
     precision = tecla - '0' + 10 * (tecla == '0');
     figuras[2] = Cono(precision);
@@ -59,8 +61,9 @@ bool P1_FGE_PulsarTeclaNormal(unsigned char tecla) {
     figuras[5] = Moebius(precision);
     figuras[6] = Klein(precision);
   }
-  else if (tecla == ' ' || tecla == '.') {
+  else if (tecla == ' ' || tecla == '.' || tecla == 'o') {
     ++objeto_activo %= figuras.size();
+    std::cerr << "Se ha cambiado al objeto " << figuras[objeto_activo].nombre() << std::endl;
   }
   else if (tecla == ',') {
     objeto_activo = (objeto_activo + figuras.size() - 1)% figuras.size();
@@ -81,7 +84,9 @@ void P1_DibujarObjetos(unsigned modo) {
   figuras[objeto_activo].visualizar(modo);
 }
 
-Cubo::Cubo() {
+Cubo::Cubo(std::string nombre) {
+  nombre_obj = nombre;
+
   vertex_coords.push_back(Tupla3f(0,0,1)); // 0
   vertex_coords.push_back(Tupla3f(1,0,0)); // 1
   vertex_coords.push_back(Tupla3f(1,1,0)); // 2
@@ -112,7 +117,9 @@ Cubo::Cubo() {
   indexes.push_back(Tupla3i(0,5,6));
 }
 
-Tetraedro::Tetraedro() {
+Tetraedro::Tetraedro(std::string nombre) {
+  nombre_obj = nombre;
+
   // Base: (-sqrt(2)sin(15), 0, -sqrt(2)sin(15)), (1, 0, 0), (0, 0, 1)
   const float offset = -0.366025404;
   vertex_coords.push_back(Tupla3f(offset,0,offset));
@@ -130,7 +137,9 @@ Tetraedro::Tetraedro() {
   indexes.push_back(Tupla3i(1,2,3));
 }
 
-Cono::Cono(unsigned prec) {
+Cono::Cono(unsigned prec, std::string nombre) {
+  nombre_obj = nombre;
+
   const unsigned N = 10 * prec;
   const double PI = 3.1415926;
 
@@ -154,7 +163,9 @@ Cono::Cono(unsigned prec) {
   }
 }
 
-Cilindro::Cilindro(unsigned prec) {
+Cilindro::Cilindro(unsigned prec, std::string nombre) {
+  nombre_obj = nombre;
+
   const unsigned N = 10 * prec;
   const double PI = 3.1415926;
 
@@ -198,8 +209,10 @@ Tupla3f Toro::vertice(double theta, double phi) {
   );
 }
 
-Toro::Toro(double R, double r, unsigned prec)
+Toro::Toro(double R, double r, unsigned prec, std::string nombre)
   :rad_ext(R), rad_int(r) {
+  nombre_obj = nombre;
+
   const unsigned N = 10 * prec;
   const double TAU = 6.2831853; // τ = 2π
 
@@ -238,7 +251,9 @@ Tupla3f Moebius::vertice(double u, double v) {
   );
 }
 
-Moebius::Moebius(unsigned prec) {
+Moebius::Moebius(unsigned prec, std::string nombre) {
+  nombre_obj = nombre;
+
   const unsigned N = 10 * prec;
   const double TAU = 6.2831853; // τ = 2π
 
@@ -299,7 +314,9 @@ Tupla3f Klein::vertice(double u, double v) {
   );
 }
 
-Klein::Klein(unsigned prec) {
+Klein::Klein(unsigned prec, std::string nombre) {
+  nombre_obj = nombre;
+
   const unsigned N = 10 * prec;
   const double TAU = 6.2831853; // τ = 2π
 

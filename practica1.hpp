@@ -16,22 +16,22 @@ void P1_DibujarObjetos( unsigned modo ) ;
 
 class Cubo : public MallaInd {
 public:
-  Cubo();
+  Cubo(std::string nombre = "Cubo");
 };
 
 class Tetraedro : public MallaInd {
 public:
-  Tetraedro();
+  Tetraedro(std::string nombre = "Tetraedro");
 };
 
 class Cono : public MallaInd {
 public:
-  Cono(unsigned prec);
+  Cono(unsigned prec, std::string nombre = "Cono");
 };
 
 class Cilindro : public MallaInd {
 public:
-  Cilindro(unsigned prec);
+  Cilindro(unsigned prec, std::string nombre = "Cilindro");
 };
 
 class Toro : public MallaInd {
@@ -41,21 +41,21 @@ private:
   // Calcula el vértice (x, y, z) a partir de las ecuaciones paramétricas
   Tupla3f vertice(double theta, double phi);
 public:
-  Toro(double R, double r, unsigned prec);
+  Toro(double R, double r, unsigned prec, std::string nombre = "Toro");
 };
 
 class Moebius : public MallaInd {
 private:
   Tupla3f vertice(double u, double v);
 public:
-  Moebius(unsigned prec);
+  Moebius(unsigned prec, std::string nombre = "Cinta de Möbius");
 };
 
 class Klein : public MallaInd {
 private:
   Tupla3f vertice(double u, double v);
 public:
-  Klein(unsigned prec);
+  Klein(unsigned prec, std::string nombre = "Botella de Klein");
 };
 
 #endif

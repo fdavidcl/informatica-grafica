@@ -244,6 +244,7 @@ void FGE_PulsarTeclaNormal( unsigned char tecla, int x_raton, int y_raton )
    bool redibujar = true ; // true si al acabar de procesar el evento resulta que es necesario redibujar
    switch (toupper(tecla))
    {
+      case 'P':
       case 13: // Tecla ENTER
         practica_actual = 1 + practica_actual % NUM_PRACTICAS;
         std::cerr << "Cambiando práctica a " << practica_actual << std::endl;
@@ -261,6 +262,10 @@ void FGE_PulsarTeclaNormal( unsigned char tecla, int x_raton, int y_raton )
         break;
       case 'F':
         modo_vis = 3;
+        break;
+
+      case 'M':
+        ++modo_vis %= 4;
         break;
 
       case 'Q' :
