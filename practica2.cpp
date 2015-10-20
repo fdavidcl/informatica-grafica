@@ -8,9 +8,16 @@
 #include "aux.hpp"
 #include "tuplasg.hpp"   // Tupla3f
 #include "practica2.hpp"
+#include "MallaInd.hpp"
+#include "MallaPly.hpp"
+#include "MallaRev.hpp"
 #include <cmath>
+#include <cstring>
+#include <sstream>
 
 unsigned p2_objeto_activo = 0;
+
+MallaInd * p2_figuras[2];
 
 
 // ---------------------------------------------------------------------
@@ -19,6 +26,26 @@ unsigned p2_objeto_activo = 0;
 // incializado OpenGL.
 
 void P2_Inicializar(int argc, char *argv[]) {
+  char * ply_file, * rev_file;
+  unsigned perfiles = 10;
+
+  if (argc == 0) {
+    strcpy(ply_file, "../plys/beethoven.ply");
+  } else {
+    strcpy(ply_file, argv[0]);
+  }
+  if (argc < 2) {
+    strcpy(rev_file, "../plys/peon.ply");
+  } else {
+    strcpy(rev_file, argv[1]);
+  }
+  if (argc >= 3) {
+    std::stringstream conversor(argv[2]);
+    conversor >> perfiles;
+  }
+
+  p2_figuras[0] = new MallaPly(ply_file);
+  p2_figuras[1] = new MallaRevol(rev_file, perfiles);
 }
 
 // ---------------------------------------------------------------------
