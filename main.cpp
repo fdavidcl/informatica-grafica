@@ -63,6 +63,13 @@ unsigned
    modo_vis  ,  // modo de visualización (0,1,3,4)
    practica_actual ;  // practica actual (cambiable por teclado) (1,2,3,4,5)
 
+const std::string modos[] = {
+  "Puntos",
+  "Alambre",
+  "Relleno",
+  "Ajedrez"
+};
+
 const unsigned NUM_PRACTICAS = 2;
 
 // *********************************************************************
@@ -247,7 +254,7 @@ void FGE_PulsarTeclaNormal( unsigned char tecla, int x_raton, int y_raton )
       case 'P':
       case 13: // Tecla ENTER
         practica_actual = 1 + practica_actual % NUM_PRACTICAS;
-        std::cerr << "Cambiando práctica a " << practica_actual << std::endl;
+        std::cerr << "Práctica: " << practica_actual << std::endl;
         break;
 
       // Modo visualización: puntos, líneas, relleno y ajedrez
@@ -266,6 +273,7 @@ void FGE_PulsarTeclaNormal( unsigned char tecla, int x_raton, int y_raton )
 
       case 'M':
         ++modo_vis %= 4;
+        std::cerr << "Modo visualización: " << modos[modo_vis] << std::endl;
         break;
 
       case 'Q' :

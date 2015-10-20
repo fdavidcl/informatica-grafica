@@ -63,7 +63,7 @@ bool P1_FGE_PulsarTeclaNormal(unsigned char tecla) {
   }
   else if (tecla == ' ' || tecla == '.' || tecla == 'o') {
     ++objeto_activo %= figuras.size();
-    std::cerr << "Se ha cambiado al objeto " << figuras[objeto_activo].nombre() << std::endl;
+    std::cerr << "Objeto actual: " << figuras[objeto_activo].nombre() << std::endl;
   }
   else if (tecla == ',') {
     objeto_activo = (objeto_activo + figuras.size() - 1)% figuras.size();
