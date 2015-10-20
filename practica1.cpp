@@ -37,6 +37,7 @@ void P1_Inicializar(int argc, char *argv[]) {
   figuras.push_back(Cilindro(precision));
   figuras.push_back(Toro(DEFAULT_MAJOR_RADIUS, DEFAULT_MINOR_RADIUS, precision));
   figuras.push_back(Moebius(precision));
+  figuras.push_back(Klein(precision));
 }
 
 // ---------------------------------------------------------------------
@@ -56,6 +57,7 @@ bool P1_FGE_PulsarTeclaNormal(unsigned char tecla) {
     figuras[3] = Cilindro(precision);
     figuras[4] = Toro(DEFAULT_MAJOR_RADIUS, DEFAULT_MINOR_RADIUS, precision);
     figuras[5] = Moebius(precision);
+    figuras[6] = Klein(precision);
   }
   else if (tecla == ' ' || tecla == '.') {
     ++objeto_activo %= figuras.size();
@@ -270,6 +272,67 @@ Moebius::Moebius(unsigned prec) {
   for (unsigned j = 0; j < N - 1; ++j) {
     indexes.push_back(Tupla3i((N - 1)*N + j, (N - j - 1)%N, (N - 1)*N + (j + 1)%N));
     indexes.push_back(Tupla3i((N - j - 2)%N, (N - j - 1)%N, (N - 1) * N + (j + 1)%N));
+  }
+
+}
+
+Tupla3f Klein::vertice(double u, double v) {
+  double cosu = cos(u), cosv = cos(v),
+    sinu = sin(u), sinv = sin(v);
+
+  // Ecuaciones paramétricas de la proyección tridimensional
+  // de la botella de Klein obtenidas de Wikipedia:
+  // https://en.wikipedia.org/wiki/Klein_bottle#Bottle_shape
+  return Tupla3f(
+    // x
+    -(2.0/15) * cosu * (3 * cosv - 30 * sinu + 90 * pow(cosu, 4) * sinu
+    - 60 * pow(cosu, 6) * sinu + 5 * cosu * cosv * sinu)
+
+    ,// y
+    -(1.0/15) * sinu * (3 * cosv - 3 * cosu * cosu * cosv - 48 * pow(cosu, 4) * cosv
+    + 48 * pow(cosu, 6) * cosv - 60 * sinu + 5 * cosu * cosv * sinu
+    - 5 * pow(cosu, 3) * cosv * sinu - 80 * pow(cosu, 5) * cosv * sinu
+    + 80 * pow(cosu, 7) * cosv * sinu)
+
+    ,// z
+    (2.0/15) * (3 + 5 * cosu * sinu) * sinv
+  );
+}
+
+Klein::Klein(unsigned prec) {
+  const unsigned N = 10 * prec;
+  const double TAU = 6.2831853; // τ = 2π
+
+  const double LIMIT_U = TAU/2;
+  const double LIMIT_V = TAU;
+
+  // Añadimos vértices con la precisión dada
+  for (unsigned i = 0; i < N; ++i) {
+    double u = (double)(i) / N * LIMIT_U;
+
+    // Vértices i*N a i*N + (N - 1)
+    for (unsigned j = 0; j < N; ++j) {
+      // Vértice i*N + j
+      double v = (double)(j) / N * LIMIT_V;
+
+      vertex_coords.push_back(vertice(u, v));
+    }
+  }
+
+  // Añadimos caras
+  for (unsigned i = 0; i < N - 1; ++i) {
+    for (unsigned j = 0; j < N; ++j) {
+      // Unir cada punto del círculo con el que está en la misma posición en
+      // el siguiente círculo y con los adyacentes
+      indexes.push_back(Tupla3i(i*N + j, ((i + 1)%N)*N + j, i*N + (j + 1)%N));
+      indexes.push_back(Tupla3i(((i + 1)%N)*N + j, ((i + 1)%N)*N + (j + 1)%N, i * N + (j + 1)%N));
+    }
+  }
+
+  // La última fila de vértices hay que unirla con los opuestos de la primera
+  for (unsigned j = 0; j < N; ++j) {
+    indexes.push_back(Tupla3i((N - 1)*N + j, (N - (j + N/2)%N)%N, (N - 1)*N + (j + 1)%N));
+    indexes.push_back(Tupla3i((N - (j + N/2)%N - 1)%N, (N - (j + N/2)%N)%N, (N - 1) * N + (j + 1)%N));
   }
 
 }

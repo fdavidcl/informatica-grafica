@@ -51,4 +51,11 @@ public:
   Moebius(unsigned prec);
 };
 
+class Klein : public MallaInd {
+private:
+  Tupla3f vertice(double u, double v);
+public:
+  Klein(unsigned prec);
+};
+
 #endif
