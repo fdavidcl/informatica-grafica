@@ -15,9 +15,9 @@
 #include <string>
 #include <sstream>
 
-unsigned p2_objeto_activo = 0;
-
-MallaInd * p2_figuras[2];
+static unsigned p2_objeto_activo = 0;
+static const unsigned NUM_OBJETOS = 2;
+static MallaInd * p2_figuras[NUM_OBJETOS];
 
 
 // ---------------------------------------------------------------------
@@ -59,8 +59,20 @@ void P2_Inicializar(int argc, char *argv[]) {
 //    cambiado nada)
 
 bool P2_FGE_PulsarTeclaNormal(unsigned char tecla) {
+  tecla = tolower(tecla);
 
-  return false;
+  if (tecla >= '0' && tecla <= '9') {
+    unsigned num_perf = (tecla - '0') * 10;
+    static_cast<MallaRevol*>(p2_figuras[1])->construir(num_perf);
+  } else if (tecla == ' ' || tecla == '.' || tecla == 'o') {
+    ++p2_objeto_activo %= NUM_OBJETOS;
+  } else if (tecla == ',') {
+    p2_objeto_activo = (p2_objeto_activo + NUM_OBJETOS - 1) % NUM_OBJETOS;
+  } else {
+    return false;
+  }
+
+  return true;
 }
 
 
@@ -69,5 +81,5 @@ bool P2_FGE_PulsarTeclaNormal(unsigned char tecla) {
 // modo: 0 - puntos, 1 - alambre, 2 - sólido, 3 - sólido ajedrez , >=4 otros....
 
 void P2_DibujarObjetos(unsigned modo) {
-
+  p2_figuras[p2_objeto_activo]->visualizar(modo);
 }
