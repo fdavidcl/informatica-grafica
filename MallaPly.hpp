@@ -4,7 +4,7 @@
 
 class MallaPly : public MallaInd {
 public:
-  MallaPly(const char * filename);
+  MallaPly(const char * filename, std::string nombre = "Malla PLY");
 };
 
 #endif

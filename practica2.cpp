@@ -40,7 +40,7 @@ void P2_Inicializar(int argc, char *argv[]) {
     rev_file = argv[2];
   }
   if (argc >= 4) {
-    std::stringstream conversor(argv[2]);
+    std::stringstream conversor(argv[3]);
     conversor >> perfiles;
   }
 
@@ -62,10 +62,11 @@ bool P2_FGE_PulsarTeclaNormal(unsigned char tecla) {
   tecla = tolower(tecla);
 
   if (tecla >= '0' && tecla <= '9') {
-    unsigned num_perf = (tecla - '0') * 10;
+    unsigned num_perf = (tecla - '0') * 10 + 10 * (tecla == '0');
     static_cast<MallaRevol*>(p2_figuras[1])->construir(num_perf);
   } else if (tecla == ' ' || tecla == '.' || tecla == 'o') {
     ++p2_objeto_activo %= NUM_OBJETOS;
+    std::cerr << "Objeto: " << p2_figuras[p2_objeto_activo]->nombre() << std::endl;
   } else if (tecla == ',') {
     p2_objeto_activo = (p2_objeto_activo + NUM_OBJETOS - 1) % NUM_OBJETOS;
   } else {

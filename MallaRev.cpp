@@ -5,7 +5,7 @@
 void MallaRevol::construir(unsigned num_perfiles) {
   vertex_coords.erase(vertex_coords.begin(), vertex_coords.end());
   indexes.erase(indexes.begin(), indexes.end());
-  
+
   const int Nc = perfil.size(), Nv = perfil.size()/3;
   const double TAU = 6.2831853; // τ = 2π
 
@@ -36,7 +36,9 @@ void MallaRevol::construir(unsigned num_perfiles) {
     }
 }
 
-MallaRevol::MallaRevol(const char * filename, unsigned num_perfiles) {
+MallaRevol::MallaRevol(const char * filename, unsigned num_perfiles, std::string nombre) {
+  nombre_obj = nombre;
+
   ply::read_vertices(filename, perfil);
   construir(num_perfiles);
 }

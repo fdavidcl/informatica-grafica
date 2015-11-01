@@ -7,7 +7,7 @@ protected:
   std::vector<float> perfil;
 
 public:
-  MallaRevol(const char * filename, unsigned num_perfiles);
+  MallaRevol(const char * filename, unsigned num_perfiles, std::string nombre = "Malla de revolución");
   void construir(unsigned num_perfiles);
 };
 
