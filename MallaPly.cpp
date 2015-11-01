@@ -1,7 +1,9 @@
 #include "MallaPly.hpp"
 #include "file_ply_stl.hpp"
 
-MallaPly::MallaPly(const char * filename) {
+MallaPly::MallaPly(const char * filename, std::string nombre) {
+  nombre_obj = nombre;
+  
   std::vector<float> vertices;
   std::vector<int> caras;
   ply::read(filename, vertices, caras);
