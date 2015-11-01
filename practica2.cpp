@@ -62,7 +62,7 @@ bool P2_FGE_PulsarTeclaNormal(unsigned char tecla) {
   tecla = tolower(tecla);
 
   if (tecla >= '0' && tecla <= '9') {
-    unsigned num_perf = (tecla - '0') * 10 + 10 * (tecla == '0');
+    unsigned num_perf = (tecla - '0' + 10 * (tecla == '0')) * 10;
     static_cast<MallaRevol*>(p2_figuras[1])->construir(num_perf);
   } else if (tecla == ' ' || tecla == '.' || tecla == 'o') {
     ++p2_objeto_activo %= NUM_OBJETOS;
