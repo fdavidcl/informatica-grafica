@@ -17,7 +17,7 @@
 
 static unsigned p2_objeto_activo = 0;
 static const unsigned NUM_OBJETOS = 2;
-static MallaInd * p2_figuras[NUM_OBJETOS];
+static MallaInd * p2_figuras[NUM_OBJETOS] = {NULL};
 
 
 // ---------------------------------------------------------------------
