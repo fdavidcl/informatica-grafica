@@ -5,13 +5,10 @@ Informática Gráfica
 
 Teclas
 ---------------------------------------------
- * [ ] (tecla espacio): Cambia de objeto (rota entre cubo - tetraedro - cono -
-   cilindro)
- * [A]: Modo de visualización de puntos
- * [S]: Modo de visualización de líneas
- * [D]: Modo de visualización de relleno
- * [F]: Modo de visualización de ajedrez
- * [1-9,0]: Modifica el número de triángulos usados en las mallas del cono y del
-   cilindro
-
-
+ * <kbd>&nbsp;</kbd> (tecla espacio): Cambia de objeto
+ * <kbd>A</kbd>: Modo de visualización de puntos
+ * <kbd>S</kbd>: Modo de visualización de líneas
+ * <kbd>D</kbd>: Modo de visualización de relleno
+ * <kbd>F</kbd>: Modo de visualización de ajedrez
+ * <kbd>1</kbd>-<kbd>9</kbd>,<kbd>0</kbd>: Modifica el número de triángulos usados en las mallas con precisión ajustable
+ * <kbd>P</kbd>: Cambia de práctica
