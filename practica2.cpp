@@ -66,7 +66,7 @@ bool P2_FGE_PulsarTeclaNormal(unsigned char tecla) {
     static_cast<MallaRevol*>(p2_figuras[1])->construir(num_perf);
   } else if (tecla == ' ' || tecla == '.' || tecla == 'o') {
     ++p2_objeto_activo %= NUM_OBJETOS;
-    std::cerr << "Objeto: " << p2_figuras[p2_objeto_activo]->nombre() << std::endl;
+    std::cerr << "Objeto actual: " << p2_figuras[p2_objeto_activo]->nombre() << std::endl;
   } else if (tecla == ',') {
     p2_objeto_activo = (p2_objeto_activo + NUM_OBJETOS - 1) % NUM_OBJETOS;
   } else {
