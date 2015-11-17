@@ -421,7 +421,7 @@ void Inicializa_Vars( )
    camara_angulo_y = 0.0 ;
 
    // inicializar práctica actual y modo de visualización inicial
-   practica_actual = 2 ;
+   practica_actual = 3 ;
    modo_vis = 0 ;
 }
 
