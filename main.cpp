@@ -193,6 +193,9 @@ void DibujarObjetos()
       case 2:
          P2_DibujarObjetos(modo_vis);
          break;
+      case 3:
+         P3_DibujarObjetos(modo_vis);
+         break;
 
       default :
          cout << "El valor de 'practica_actual' (" << practica_actual  << ") es incorrecto" << endl ;
@@ -295,6 +298,9 @@ void FGE_PulsarTeclaNormal( unsigned char tecla, int x_raton, int y_raton )
             // falta: case 2, case 3, etc....
             case 2:
                redibujar = P2_FGE_PulsarTeclaNormal(tecla);
+               break;
+            case 3:
+               redibujar = P3_FGE_PulsarTeclaNormal(tecla);
                break;
 
             default :
@@ -482,8 +488,11 @@ void Inicializar( int argc, char *argv[] )
    // inicializar práctica 1.
    P1_Inicializar( argc, argv ) ;
 
-   // inicializar práctica 1.
+   // inicializar práctica 2.
    P2_Inicializar( argc, argv ) ;
+
+   // inicializar práctica 3.
+   P3_Inicializar( argc, argv ) ;
 }
 
 // *********************************************************************
