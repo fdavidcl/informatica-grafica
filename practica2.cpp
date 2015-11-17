@@ -11,12 +11,13 @@
 #include "MallaInd.hpp"
 #include "MallaPly.hpp"
 #include "MallaRev.hpp"
+#include "MallaBarrido.hpp"
 #include <cmath>
 #include <string>
 #include <sstream>
 
 static unsigned p2_objeto_activo = 0;
-static const unsigned NUM_OBJETOS = 2;
+static const unsigned NUM_OBJETOS = 3;
 static MallaInd * p2_figuras[NUM_OBJETOS] = {NULL};
 
 
@@ -26,8 +27,9 @@ static MallaInd * p2_figuras[NUM_OBJETOS] = {NULL};
 // incializado OpenGL.
 
 void P2_Inicializar(int argc, char *argv[]) {
-  std::string ply_file, rev_file;
+  std::string ply_file, rev_file, bar_file;
   unsigned perfiles = 10;
+  Tupla3f vec_dir(1, 1, 1);
 
   if (argc < 2) {
     ply_file = "../plys/beethoven.ply";
@@ -39,13 +41,28 @@ void P2_Inicializar(int argc, char *argv[]) {
   } else {
     rev_file = argv[2];
   }
-  if (argc >= 4) {
-    std::stringstream conversor(argv[3]);
+  if (argc < 4) {
+    bar_file = "../plys/peon.ply";
+  } else {
+    bar_file = argv[3];
+  }
+  if (argc >= 5) {
+    std::stringstream conversor(argv[4]);
     conversor >> perfiles;
   }
+  if (argc >= 8) {
+    for (int i = 0; i < 3; i++) {
+      std::stringstream conversor(argv[5 + i]);
+      conversor >> vec_dir[i];
+    }
+
+    std::cout << vec_dir;
+  }
+
 
   p2_figuras[0] = new MallaPly(ply_file.c_str());
   p2_figuras[1] = new MallaRevol(rev_file.c_str(), perfiles);
+  p2_figuras[2] = new MallaBarrido(bar_file.c_str(), perfiles, vec_dir);
 }
 
 // ---------------------------------------------------------------------
@@ -62,8 +79,9 @@ bool P2_FGE_PulsarTeclaNormal(unsigned char tecla) {
   tecla = tolower(tecla);
 
   if (tecla >= '0' && tecla <= '9') {
-    unsigned num_perf = (tecla - '0' + 10 * (tecla == '0')) * 10;
-    static_cast<MallaRevol*>(p2_figuras[1])->construir(num_perf);
+    unsigned num = (tecla - '0' + 10 * (tecla == '0'));
+    static_cast<MallaRevol*>(p2_figuras[1])->construir(num * 10);
+    static_cast<MallaBarrido*>(p2_figuras[2])->construir(num);
   } else if (tecla == ' ' || tecla == '.' || tecla == 'o') {
     ++p2_objeto_activo %= NUM_OBJETOS;
     std::cerr << "Objeto actual: " << p2_figuras[p2_objeto_activo]->nombre() << std::endl;
