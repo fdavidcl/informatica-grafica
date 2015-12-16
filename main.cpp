@@ -21,6 +21,7 @@
 // includes de archivos en el directorio de trabajo (de las prácticas)
 #include "practica1.hpp"
 #include "practica2.hpp"
+#include "practica3.hpp"
 
 // evita la necesidad de escribir std::
 using namespace std ;
