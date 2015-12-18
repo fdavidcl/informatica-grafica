@@ -4,7 +4,7 @@
 #include "Objeto3D.hpp"
 #include "matrizg.hpp"
 
-typedef unsigned ContextoVis;
+// typedef unsigned ContextoVis;
 
 struct EntradaNGE {
   // tipoE define el tipo de entrada: 0 = objeto, 1 = transformación
@@ -23,10 +23,9 @@ struct EntradaNGE {
 class NodoGrafoEscena : public Objeto3D {
 protected:
   std::vector<EntradaNGE> entradas;
-  Tupla3f color;
 
 public:
-  NodoGrafoEscena() :color(0,0,0) {}
+  //NodoGrafoEscena() :color(0,0,0) {}
   // Método para visualizar usando OpenGL
   virtual void visualizar(unsigned modo_vis);
 

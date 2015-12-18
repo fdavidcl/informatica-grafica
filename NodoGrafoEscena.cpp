@@ -31,6 +31,7 @@ void NodoGrafoEscena::agregar(EntradaNGE * entrada) {
 
 void NodoGrafoEscena::agregar(Objeto3D * pObjeto) {
   entradas.push_back(EntradaNGE(pObjeto));
+  pObjeto->setColor(this->color);
 }
 
 void NodoGrafoEscena::agregar(const Matriz4f& pMatriz) {

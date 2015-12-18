@@ -19,6 +19,7 @@ void MallaInd::visualizar(unsigned modo_vis) {
   glPolygonMode(GL_FRONT_AND_BACK, modo[modo_vis]);
 
   if (modo_vis < 3) {
+    glColor3f(color(R), color(G), color(B));
     glDrawElements(GL_TRIANGLES, 3 * indexes.size(), GL_UNSIGNED_INT, &indexes.front());
   } else { // Ajedrez
     for (unsigned i = 0; i < indexes.size(); i++) {

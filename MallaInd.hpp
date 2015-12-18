@@ -13,6 +13,7 @@ class MallaInd : public Objeto3D
      std::vector<Tupla3i> indexes;
 
    public:
+     //MallaInd() :color(0,0,0) {}
      virtual void visualizar(unsigned modo_vis);
 
      void imprimir();
