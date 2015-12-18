@@ -1,33 +1,52 @@
 #include "R2.hpp"
 #include "matrices-tr.hpp"
 #include "practica1.hpp"
+#include "MallaPly.hpp"
 
 CabezaR2::CabezaR2(float giro, float offset_cam)
   :giro(giro), offset_cam(offset_cam) {
 }
 
 CuerpoR2::CuerpoR2() {
-  color = Tupla3f(0.9, 0.86, 0.86);
+  color = Tupla3f(0.86, 0.86, 0.9);
   agregar(MAT_Escalado(1, 1.2, 1));
   agregar(new Cilindro(5));
 }
 
 BrazoSuperior::BrazoSuperior() {
-  color = Tupla3f(0.95, 0.9, 0.9);
+  color = Tupla3f(0.9, 0.9, 0.95);
   agregar(MAT_Rotacion(90, 0, 1, 0));
   agregar(MAT_Rotacion(90, 1, 0, 0));
-  agregar(MAT_Escalado(0.4, 0.12, 0.4));
+  agregar(MAT_Escalado(0.4, 0.14, 0.4));
   agregar(new Cilindro(5));
 
-  agregar(MAT_Traslacion(0.3, 0, 0));
-  agregar(MAT_Escalado(0.8, 0.8, 0.8));
-  agregar(new Cilindro(5));
+  agregar(MAT_Traslacion(0, 1, 0));
+  agregar(MAT_Escalado(0.7, 1, 0.7));
+  Cilindro * junta = new Cilindro(5);
+  agregar(junta);
+  junta->setColor(Tupla3f(0.6, 0.62, 0.65));
+
+  agregar(MAT_Traslacion(0, -1.01, 0));
+  agregar(MAT_Escalado(0.5, 2, 0.5));
+  Cilindro * agujero = new Cilindro(5);
+  agregar(agujero);
+  agujero->setColor(Tupla3f(0.2, 0.22, 0.26));
 }
 
 LadoBrazo::LadoBrazo() {
-  color = Tupla3f(0.7, 0.65, 0.65);
-  agregar(MAT_Traslacion(0, -1, 0));
-  agregar(MAT_Escalado(0.2, 1.4, 0.25));
+  color = Tupla3f(0.65, 0.67, 0.7);
+  agregar(MAT_Traslacion(0.05, -1.45, -0.18));
+  agregar(MAT_Escalado(0.2, 1.4, 0.35));
+  agregar(new Cubo());
+
+  agregar(MAT_Traslacion(-0.3, 0, 0.2));
+  agregar(MAT_Escalado(1.2, 1, 0.6));
+  Cubo * lateral = new Cubo();
+  agregar(lateral);
+  lateral->setColor(Tupla3f(0.05, 0.15, 0.35));
+
+  agregar(MAT_Traslacion(-0.15, -0.25, -0.5));
+  agregar(MAT_Escalado(1.5, 0.25, 2));
   agregar(new Cubo());
 }
 
@@ -35,7 +54,7 @@ BrazoR2::BrazoR2(float giro, float offset)
   :giro(giro), offset(offset) {
 
   // Coloca el brazo a un lado
-  agregar(MAT_Traslacion(-1.4, 0, 0));
+  agregar(MAT_Traslacion(-1.35, 0, 0));
 
   // Gira el brazo según el parámetro dado
   agregar(MAT_Rotacion(giro, 1, 0, 0));
@@ -53,7 +72,7 @@ BrazoR2::BrazoR2(float giro, float offset)
 }
 
 PataR2::PataR2() {
-
+  agregar(new MallaPly("truncated_pyramid.ply"));
 }
 
 R2::R2() {
