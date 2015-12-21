@@ -71,7 +71,7 @@ const std::string modos[] = {
   "Ajedrez"
 };
 
-const unsigned NUM_PRACTICAS = 2;
+const unsigned NUM_PRACTICAS = 3;
 
 // *********************************************************************
 // **

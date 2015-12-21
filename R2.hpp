@@ -2,13 +2,30 @@
 #define __R2
 #include "NodoGrafoEscena.hpp"
 
+class ProjR2 : public NodoGrafoEscena {
+private:
+  float offset;
+public:
+  ProjR2(float offset);
+
+  //float desplazar(float nuevo_offset);
+};
+
+class Camara : public NodoGrafoEscena {
+public:
+  Camara();
+};
+
 class CabezaR2 : public NodoGrafoEscena {
 private:
-  float giro, offset_cam;
+  float giro, offset;
+  ProjR2 * pr;
 public:
-  CabezaR2(float giro, float offset_cam);
-  float girar(float nuevo_giro);
-  float desplazar_cam(float nuevo_offset);
+  CabezaR2(float giro, float offset);
+  /**void girar(float nuevo_giro);
+  void desplazar(float nuevo_offset) {
+    pr->desplazar(nuevo_offset);
+  }**/
 };
 
 class CuerpoR2 : public NodoGrafoEscena {
@@ -31,8 +48,8 @@ private:
   float giro, offset;
 public:
   BrazoR2(float giro, float offset);
-  float girar(float nuevo_giro);
-  float desplazar(float nuevo_offset);
+  /*void girar(float nuevo_giro);
+  void desplazar(float nuevo_offset);*/
 };
 
 class PataR2 : public NodoGrafoEscena {
@@ -41,8 +58,18 @@ public:
 };
 
 class R2 : public NodoGrafoEscena {
+private:
+  float giro_cabeza, offset_proj, giro_brazos, offset_brazos;
+  CabezaR2 * cabeza;
+  BrazoR2 * brazos[2];
+
 public:
+  static const float DEFAULT_VALUE;
   R2();
+  void girar_cabeza(float giro);
+  void girar_brazos(float giro);
+  void extender_proj(float offset);
+  void extender_brazos(float offset);
 };
 
 #endif
