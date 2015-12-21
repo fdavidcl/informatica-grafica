@@ -3,10 +3,9 @@
 #include "practica1.hpp"
 #include "MallaPly.hpp"
 
-CabezaR2::CabezaR2(float giro, float offset)
-  :giro(giro), offset(offset) {
+CabezaR2::CabezaR2(float giro, float offset) {
   color = Tupla3f(0.66, 0.66, 0.66);
-  agregar(MAT_Rotacion(-30 + 60 * giro, 0, 1, 0));
+  agregar(MAT_Rotacion(0, 0, 1, 0)); // Vacía (usamos el método)
   agregar(MAT_Traslacion(0, 2.48, 0));
 
   agregar(new Camara());
@@ -15,6 +14,13 @@ CabezaR2::CabezaR2(float giro, float offset)
   agregar(new MallaPly("sphere.ply"));
 
   agregar(pr = new ProjR2(offset));
+
+  girar(giro);
+  extender(offset);
+}
+
+void CabezaR2::girar(float giro) {
+  entradas.at(0) = EntradaNGE(MAT_Rotacion(-30 + 60 * giro, 0, 1, 0));
 }
 
 Camara::Camara() {
@@ -32,7 +38,7 @@ Camara::Camara() {
   camara->setColor(Tupla3f(0.1, 0.1, 0.1));
 }
 
-ProjR2::ProjR2(float offset) :offset(offset) {
+ProjR2::ProjR2(float offset) {
   color = Tupla3f(0.66, 0.66, 0.66);
   agregar(MAT_Rotacion(15, 0, 1, 0));
 
@@ -43,12 +49,16 @@ ProjR2::ProjR2(float offset) :offset(offset) {
   base_camara->setColor(Tupla3f(0.75, 0.75, 0.75));
 
   agregar(MAT_Rotacion(85, 1, 0, 0));
-  agregar(MAT_Escalado(80, 80 * (1 + offset), 80));
+  agregar(MAT_Escalado(1, 1, 1)); // Vacío (usamos el método)
   agregar(new Cilindro(5));
   agregar(MAT_Escalado(0.9, 1.01, 0.9));
   Cilindro * interior_camara = new Cilindro(5);
   agregar(interior_camara);
   interior_camara->setColor(Tupla3f(0.2, 0.2, 0.2));
+}
+
+void ProjR2::extender(float offset) {
+  entradas.at(5) = EntradaNGE(MAT_Escalado(80, 60 * offset + 80, 80));
 }
 
 CuerpoR2::CuerpoR2() {
@@ -94,23 +104,33 @@ LadoBrazo::LadoBrazo() {
   agregar(new Cubo());
 }
 
-BrazoR2::BrazoR2(float giro, float offset)
-  :giro(giro), offset(offset) {
+BrazoR2::BrazoR2(float giro, float offset) {
   // Coloca el brazo a un lado y traslada hacia arriba
   agregar(MAT_Traslacion(-1.35, 2, 0));
-  // Gira el brazo según el parámetro dado
-  agregar(MAT_Rotacion(60 * giro, 1, 0, 0));
+  agregar(MAT_Rotacion(0, 1, 0, 0)); // Vacía (giramos con el método)
 
   agregar(new BrazoSuperior());
 
-  // Permite extender el brazo
-  agregar(MAT_Traslacion(0, offset, 0));
+  agregar(MAT_Traslacion(0, 0, 0)); // Vacía (usamos el método)
   agregar(new LadoBrazo());
 
   // Coloca la pata
   agregar(MAT_Rotacion(12, 1, 0, 0));
-  agregar(MAT_Traslacion(0.1, 2.3, 0.4));
+  agregar(MAT_Traslacion(0.1, -2.3, 0.4));
   agregar(new PataR2());
+
+  girar(giro);
+  extender(offset);
+}
+
+void BrazoR2::girar(float giro) {
+  // Gira el brazo según el parámetro dado
+  entradas.at(1) = EntradaNGE(MAT_Rotacion(60 * giro, 1, 0, 0));
+}
+
+void BrazoR2::extender(float offset) {
+  // Permite extender el brazo
+  entradas.at(3) = EntradaNGE(MAT_Traslacion(0, (offset - 1)/3.0, 0));
 }
 
 PataR2::PataR2() {
@@ -119,8 +139,7 @@ PataR2::PataR2() {
   agregar(new MallaPly("truncated_pyramid.ply"));
 }
 
-R2::R2()
-  :giro_cabeza(DEFAULT_VALUE), giro_brazos(DEFAULT_VALUE), offset_proj(DEFAULT_VALUE), offset_brazos(DEFAULT_VALUE) {
+R2::R2() {
   // Coloca la pata inferior
   agregar(MAT_Traslacion(0, -0.35, 0.5));
   agregar(new PataR2());
@@ -130,46 +149,16 @@ R2::R2()
   agregar(MAT_Rotacion(-12, 1, 0, 0));
 
   // Coloca la cabeza y el cuerpo
-  agregar(cabeza = new CabezaR2(giro_cabeza, offset_proj));
+  agregar(cabeza = new CabezaR2(R2::DEFAULT_VALUE, R2::DEFAULT_VALUE));
   agregar(new CuerpoR2());
 
   // Coloca los dos brazos: uno al lado derecho de R2 y realizando una simetría
   // (componiendo una rotación de π y un escalado inverso) para el izquierdo
-  agregar(brazos[0] = new BrazoR2(giro_brazos, offset_brazos));
+  agregar(izquierdo = new BrazoR2(R2::DEFAULT_VALUE, R2::DEFAULT_VALUE));
   agregar(MAT_Rotacion(180, 0, 1, 0));
   agregar(MAT_Escalado(1, 1, -1));
-  agregar(brazos[1] = new BrazoR2(giro_brazos, offset_brazos));
+  agregar(derecho = new BrazoR2(R2::DEFAULT_VALUE, R2::DEFAULT_VALUE));
 
-}
-
-void R2::girar_cabeza(float giro) {
-  giro_cabeza = giro;
-  delete cabeza;
-  cabeza = new CabezaR2(giro_cabeza, offset_proj);
-}
-
-void R2::extender_proj(float offset) {
-  offset_proj = offset;
-  delete cabeza;
-  cabeza = new CabezaR2(giro_cabeza, offset_proj);
-}
-
-void R2::girar_brazos(float giro) {
-  giro_brazos = giro;
-
-  for (int i = 0; i < 2; i++) {
-    delete brazos[i];
-    brazos[i] = new BrazoR2(giro_brazos, offset_brazos);
-  }
-}
-
-void R2::extender_brazos(float offset) {
-  offset_brazos = offset;
-
-  for (int i = 0; i < 2; i++) {
-    delete brazos[i];
-    brazos[i] = new BrazoR2(giro_brazos, offset_brazos);
-  }
 }
 
 const float R2::DEFAULT_VALUE = 0.5;
