@@ -22,6 +22,7 @@
 #include "practica1.hpp"
 #include "practica2.hpp"
 #include "practica3.hpp"
+#include "practica4.hpp"
 
 // evita la necesidad de escribir std::
 using namespace std ;
@@ -71,7 +72,7 @@ const std::string modos[] = {
   "Ajedrez"
 };
 
-const unsigned NUM_PRACTICAS = 3;
+const unsigned NUM_PRACTICAS = 4;
 
 // *********************************************************************
 // **
@@ -197,6 +198,9 @@ void DibujarObjetos()
       case 3:
          P3_DibujarObjetos(modo_vis);
          break;
+      case 4:
+         P4_DibujarObjetos(modo_vis);
+         break;
 
       default :
          cout << "El valor de 'practica_actual' (" << practica_actual  << ") es incorrecto" << endl ;
@@ -302,6 +306,9 @@ void FGE_PulsarTeclaNormal( unsigned char tecla, int x_raton, int y_raton )
                break;
             case 3:
                redibujar = P3_FGE_PulsarTeclaNormal(tecla);
+               break;
+            case 4:
+               redibujar = P4_FGE_PulsarTeclaNormal(tecla);
                break;
 
             default :
@@ -422,7 +429,7 @@ void Inicializa_Vars( )
    camara_angulo_y = 0.0 ;
 
    // inicializar práctica actual y modo de visualización inicial
-   practica_actual = 3 ;
+   practica_actual = NUM_PRACTICAS ;
    modo_vis = 0 ;
 }
 
@@ -494,6 +501,9 @@ void Inicializar( int argc, char *argv[] )
 
    // inicializar práctica 3.
    P3_Inicializar( argc, argv ) ;
+
+   // inicializar práctica 4.
+   P4_Inicializar( argc, argv ) ;
 }
 
 // *********************************************************************
