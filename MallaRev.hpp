@@ -5,6 +5,8 @@
 class MallaRevol : public MallaInd {
 protected:
   std::vector<float> perfil;
+  float altera_x(float, double);
+  float altera_z(float, double);
 
 public:
   MallaRevol(const char * filename, unsigned num_perfiles, std::string nombre = "Malla de revolución");

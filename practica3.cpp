@@ -9,13 +9,16 @@
 #include "tuplasg.hpp"   // Tupla3f
 #include "practica3.hpp"
 #include "NodoGrafoEscena.hpp"
+#include "matrices-tr.hpp"
 #include "R2.hpp"
 
 typedef void (R2::*R2Method)(float);
 
 static unsigned p3_objeto_activo = 0;
-static const unsigned NUM_OBJETOS = 3;
-static R2 * p3_figura;
+static R2 * p3_primera;
+static NodoGrafoEscena * p3_figura;
+static const unsigned NUM_R2 = 4;
+static R2 * p3_copias[NUM_R2];
 
 static const unsigned GRADOS_LIBERTAD = 4;
 static unsigned p3_grado_libertad_activo = 0;
@@ -34,7 +37,15 @@ static const std::string p3_grados_nombres[GRADOS_LIBERTAD] = {
 };
 
 void P3_Inicializar(int argc, char *argv[]) {
-  p3_figura = new R2();
+  p3_primera = new R2();
+
+  p3_figura = new NodoGrafoEscena;
+  p3_figura->agregar(p3_primera);
+
+  for (unsigned i = 1; i < NUM_R2; ++i) {
+    p3_figura->agregar(MAT_Traslacion(4, 0, 0));
+    p3_figura->agregar(new R2());
+  }
 }
 
 
@@ -57,7 +68,7 @@ bool P3_FGE_PulsarTeclaNormal(unsigned char tecla) {
     float nuevo = p3_valores[grado] + signo/100.0;
 
     if (nuevo >= 0 && nuevo <= 1) {
-      (p3_figura->*funciones_cambios[grado])(nuevo);
+      (p3_primera->*funciones_cambios[grado])(nuevo);
       std::cout << "Ajustado grado de libertad '" << p3_grados_nombres[grado] << "' con valor " << nuevo << std::endl;
       p3_valores[grado] += signo/100.0;
     }

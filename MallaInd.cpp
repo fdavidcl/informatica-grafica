@@ -1,6 +1,14 @@
 #include "MallaInd.hpp"
 #include "aux.hpp"
 
+void MallaInd::separar_caras() {
+  std::vector<Tupla3i>* recipientes[2] = {&indexes_pares, &indexes_impares};
+
+  for (unsigned i = 0; i < indexes.size(); ++i) {
+    recipientes[i%2]->push_back(indexes[i]);
+  }
+}
+
 /*************************
 Método visualizar utilizando
 la función glDrawElements.
@@ -22,6 +30,14 @@ void MallaInd::visualizar(unsigned modo_vis) {
     glColor3f(color(R), color(G), color(B));
     glDrawElements(GL_TRIANGLES, 3 * indexes.size(), GL_UNSIGNED_INT, &indexes.front());
   } else { // Ajedrez
+    if (indexes_pares.empty())
+      separar_caras(); // Al recalcular caras hay que volver a llamar a este método!
+    /*
+    glDrawElements(GL_TRIANGLES, 3 * indexes_pares.size(), GL_UNSIGNED_INT, &indexes_pares.front());
+    glColor3f(0.8, 0.8, 0.8);
+    glDrawElements(GL_TRIANGLES, 3 * indexes_impares.size(), GL_UNSIGNED_INT, &indexes_impares.front());
+    */
+
     for (unsigned i = 0; i < indexes.size(); i++) {
       float tone = 0.8 * (i % 2); // 0.8 if i is odd
       glColor3f(tone, tone, tone);
@@ -31,6 +47,7 @@ void MallaInd::visualizar(unsigned modo_vis) {
 
   glDisableClientState(GL_VERTEX_ARRAY);
 }
+
 
 /*************************
 Método visualizar utilizando

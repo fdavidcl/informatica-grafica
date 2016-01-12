@@ -57,9 +57,12 @@ private:
   CabezaR2 * cabeza;
   BrazoR2 * izquierdo, * derecho;
 
+  void inicializa();
+
 public:
   static const float DEFAULT_VALUE;
-  R2();
+  R2() { inicializa(); }
+  R2(float offset_inicial_x);
   void girar_cabeza(float giro) {
     cabeza->girar(giro);
   }

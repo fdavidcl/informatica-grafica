@@ -2,6 +2,14 @@
 #include "file_ply_stl.hpp"
 #include <cmath>
 
+float MallaRevol::altera_x(float x, double alpha) {
+  return x * alpha;
+}
+
+float MallaRevol::altera_z(float z, double alpha) {
+  return z * alpha;
+}
+
 void MallaRevol::construir(unsigned num_perfiles) {
   vertex_coords.erase(vertex_coords.begin(), vertex_coords.end());
   indexes.erase(indexes.begin(), indexes.end());
@@ -14,10 +22,12 @@ void MallaRevol::construir(unsigned num_perfiles) {
 
   for (unsigned giro = 0; giro < num_perfiles; giro++)
     for (unsigned i = 0; i < Nc; i += 3) {
+      double alpha = TAU * giro / num_perfiles;
+
       vertex_coords.push_back(Tupla3f(
-        perfil[i] * cos(TAU * giro / num_perfiles),
+        altera_x(perfil[i] * cos(alpha), alpha),
         perfil.at(i + 1),
-        perfil[i] * sin(TAU * giro / num_perfiles)
+        altera_z(perfil[i] * sin(alpha), alpha)
       ));
     }
 

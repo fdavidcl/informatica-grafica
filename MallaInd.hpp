@@ -11,6 +11,10 @@ class MallaInd : public Objeto3D
    protected:
      std::vector<Tupla3f> vertex_coords;
      std::vector<Tupla3i> indexes;
+     std::vector<Tupla3i> indexes_pares;
+     std::vector<Tupla3i> indexes_impares;
+
+     void separar_caras();
 
    public:
      //MallaInd() :color(0,0,0) {}
