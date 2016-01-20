@@ -1,5 +1,6 @@
 #include "MallaInd.hpp"
 #include "aux.hpp"
+#include <algorithm>
 
 /*************************
 Método visualizar utilizando
@@ -30,6 +31,37 @@ void MallaInd::visualizar(unsigned modo_vis) {
   }
 
   glDisableClientState(GL_VERTEX_ARRAY);
+}
+
+static Tupla3f normalizar(Tupla3f t) { return t.normalized(); }
+
+void MallaInd::calcularNormales() {
+  normales_vertices.resize(vertex_coords.size());
+  std::fill(normales_vertices.begin(), normales_vertices.end(), Tupla3f(0, 0, 0));
+
+  for (std::vector<Tupla3i>::iterator cara = indexes.begin(); cara != indexes.end(); ++cara) {
+    Tupla3f
+      p = vertex_coords[(*cara)(0)],
+      q = vertex_coords[(*cara)(1)],
+      r = vertex_coords[(*cara)(2)],
+
+      // Vectores correspondientes a dos aristas
+      a = q - p,
+      b = r - p,
+
+      // Vector normal a la cara
+      normal = a.cross(b).normalized();
+
+    normales_caras.push_back(normal);
+
+    // Sumamos ahora el normal a la cara a los vectores que
+    // corresponden a los vértices
+    for (int v = 0; v < 3; ++v)
+      normales_vertices[(*cara)(v)] = normales_vertices[(*cara)(v)] + normal;
+  }
+
+  std::transform(normales_vertices.begin(), normales_vertices.end(),
+                 normales_vertices.begin(), normalizar);
 }
 
 /*************************
