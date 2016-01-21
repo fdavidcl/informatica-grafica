@@ -3,6 +3,7 @@
 
 #include "aux.hpp"
 #include "jpg_imagen.hpp"
+#include "jpg_jinclude.hpp"
 
 class Material {
 public:
@@ -23,7 +24,7 @@ public:
   // activa textura en el cauce fijo de OpenGL
   void activar();
   // crea una textura a partir de un archivo
-  Textura (const std::string& archivoJPG);
+  Textura(const std::string& archivoJPG);
 };
 
 // ---------------------------------------------------------------------
