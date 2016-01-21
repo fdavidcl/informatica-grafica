@@ -9,15 +9,31 @@ void NodoGrafoEscena::visualizar(ContextoVis cv) {
 
   glColor3f(color(R), color(G), color(B));
 
+  // Guarda material inicial
+  Material * materialActivoInicial = cv.materialActivo;
+
   // Recorrer las entradas del nodo
   for (unsigned i = 0; i < entradas.size(); i++) {
     if (entradas[i].tipoE == 0) {
       // Visualizar los sub-objetos
-      entradas[i].objeto->visualizar(cv.modo_vis);
-    } else {
+      entradas[i].objeto->visualizar(cv);
+    } else if (entradas[i].tipoE == 1) {
       // Componer las transformaciones
       glMultMatrixf(*(entradas[i].matriz));
+    } else if (entradas[i].tipoE == 2) {
+      if (entradas[i].material != cv.materialActivo) {
+        cv.materialActivo = entradas[i].material;
+        entradas[i].material->activar();
+      }
     }
+  }
+
+  // Recupera material inicial
+  if (materialActivoInicial != cv.materialActivo) {
+    cv.materialActivo = entradas[i].material;
+
+    if (cv.materialActivo != NULL)
+      cv.materialActivo->activar();
   }
 
   glMatrixMode(GL_MODELVIEW);

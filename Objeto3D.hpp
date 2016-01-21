@@ -5,10 +5,11 @@
 #include "tuplasg.hpp"
 #include "Material.hpp"
 
-struct ContextoVis {
+class ContextoVis {
+public:
   unsigned modo_vis;
   Material * materialActivo;
-  
+
   // Constructor de ContextoVis que mantiene la compatibilidad
   // con el código que sigue utilizando únicamente el entero modo_vis
   ContextoVis(unsigned v, Material * m = NULL) :modo_vis(v), materialActivo(m) {}
