@@ -22,7 +22,7 @@ protected:
 
 public:
   //MallaInd() :color(0,0,0) {}
-  virtual void visualizar(unsigned modo_vis);
+  virtual void visualizar(ContextoVis cv);
 
   void imprimir();
 };

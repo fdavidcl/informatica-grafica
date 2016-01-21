@@ -6,20 +6,19 @@
 Método visualizar utilizando
 la función glDrawElements.
 *************************/
-void MallaInd::visualizar(unsigned modo_vis) {
+void MallaInd::visualizar(ContextoVis cv) {
   // Comprobación de parámetros
-  if (modo_vis > 3 || modo_vis < 0) {
-    std::cerr << "Parámetro modo_vis incorrecto" << std::endl;
-    return;
+  if (cv.modo_vis > 3 || cv.modo_vis < 0) {
+    cv.modo_vis = 2; // Asumimos sólido
   }
 
   const GLenum modo[] = {GL_POINT, GL_LINE, GL_FILL, GL_FILL};
 
   glEnableClientState(GL_VERTEX_ARRAY);
   glVertexPointer(3, GL_FLOAT, 0, &vertex_coords.front());
-  glPolygonMode(GL_FRONT_AND_BACK, modo[modo_vis]);
+  glPolygonMode(GL_FRONT_AND_BACK, modo[cv.modo_vis]);
 
-  if (modo_vis < 3) {
+  if (cv.modo_vis < 3) {
     glColor3f(color(R), color(G), color(B));
     glDrawElements(GL_TRIANGLES, 3 * indexes.size(), GL_UNSIGNED_INT, &indexes.front());
   } else { // Ajedrez
@@ -68,16 +67,15 @@ void MallaInd::calcularNormales() {
 Método visualizar utilizando
 las funciones glBegin y glEnd.
 ************************** /
-void MallaInd::visualizar(unsigned modo_vis) {
+void MallaInd::visualizar(ContextoVis cv) {
   // Comprobación de parámetros
-  if (modo_vis > 3 || modo_vis < 0) {
-    std::cerr << "Parámetro modo_vis incorrecto" << std::endl;
-    return;
+  if (cv.modo_vis > 3 || cv.modo_vis < 0) {
+    cv.modo_vis = 2;
   }
 
   const GLenum modo[] = {GL_POINTS, GL_LINES, GL_TRIANGLES, GL_TRIANGLES};
 
-  glBegin(modo[modo_vis]);
+  glBegin(modo[cv.modo_vis]);
     for (unsigned i = 0; i < indexes.size(); i++) {
       for (unsigned j = 0; j < 3; j++) {
         float tone = 0.8 * (i % 2); // 0.8 if i is odd

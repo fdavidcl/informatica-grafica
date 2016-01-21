@@ -1,3 +1,5 @@
+#ifndef __FUENTE_LUZ
+#define __FUENTE_LUZ
 
 // ---------------------------------------------------------------------
 // Parámetros que definen una fuente de luz
@@ -37,3 +39,5 @@ class ColeccionFuentesP4 : public ColeccionFL {
 public:
   ColeccionFuentesP4();
 };
+
+#endif

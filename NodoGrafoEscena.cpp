@@ -1,7 +1,7 @@
 #include "NodoGrafoEscena.hpp"
 #include "aux.hpp"
 
-void NodoGrafoEscena::visualizar(unsigned modo_vis) {
+void NodoGrafoEscena::visualizar(ContextoVis cv) {
   // Operamos sobre la modelview
   glMatrixMode(GL_MODELVIEW);
   // Guarda modelview actual
@@ -13,7 +13,7 @@ void NodoGrafoEscena::visualizar(unsigned modo_vis) {
   for (unsigned i = 0; i < entradas.size(); i++) {
     if (entradas[i].tipoE == 0) {
       // Visualizar los sub-objetos
-      entradas[i].objeto->visualizar(modo_vis);
+      entradas[i].objeto->visualizar(cv.modo_vis);
     } else {
       // Componer las transformaciones
       glMultMatrixf(*(entradas[i].matriz));
@@ -36,4 +36,8 @@ void NodoGrafoEscena::agregar(Objeto3D * pObjeto) {
 
 void NodoGrafoEscena::agregar(const Matriz4f& pMatriz) {
   entradas.push_back(EntradaNGE(pMatriz));
+}
+
+void NodoGrafoEscena::agregar(Material * p_material) {
+  entradas.push_back(EntradaNGE(p_material));
 }

@@ -1,3 +1,9 @@
+#ifndef __MATERIAL
+#define __MATERIAL
+
+#include "aux.hpp"
+#include "jpg_imagen.hpp"
+
 class Material {
 public:
   virtual void activar() = 0;
@@ -58,3 +64,5 @@ class MaterialPeonNegro : public MaterialEstandar {
 public:
   MaterialPeonNegro();
 };
+
+#endif
