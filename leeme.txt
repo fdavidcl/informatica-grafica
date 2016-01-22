@@ -16,6 +16,15 @@ Teclas
  * [S]: Modo de visualización de líneas
  * [D]: Modo de visualización de relleno
  * [F]: Modo de visualización de ajedrez
+ * [K]: Modo de visualización de sombreado plano
+ * [L]: Modo de visualización de sombreado suave
+
+## Práctica 4
+ * [G]: Cambia el ángulo de la fuente de luz
+ * [<]: Disminuye el valor del ángulo
+ * [>]: Aumenta el valor del ángulo
+
+## Práctica 3
 
  * [G]: Rota el grado de libertad
  * [<]: Disminuye el valor del grado de libertad activo
@@ -25,6 +34,8 @@ Teclas
  * [C]: Aumenta o disminuye el tercer grado de libertad (según se pulse [MAYUS])
  * [V]: Aumenta o disminuye el cuarto grado de libertad (según se pulse [MAYUS])
 
+## Práctica 2
+
  * [1-9,0]: Modifica el número de triángulos usados en las mallas del cono y del
    cilindro
 
@@ -33,6 +44,11 @@ Extensiones
 ---------------------------------------------
 
 ## Práctica 4
+ * Se han implementado materiales y texturas en el modelo jerárquico de la
+   práctica 3: el cuerpo del R2 adquiere una textura a partir de la imagen
+   'r2d2.jpg' incluida, y el resto del robot utiliza varios materiales.
+
+   Se mantiene la iluminacion creada en la práctica 4 en esta práctica también.
 
 ## Práctica 3
  * No se ha implementado la animación del objeto.

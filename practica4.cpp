@@ -38,8 +38,11 @@ bool P4_FGE_PulsarTeclaNormal(unsigned char tecla) {
 }
 
 void P4_DibujarObjetos(ContextoVis modo) {
+  glEnable(GL_LIGHTING);
+
   p4_escena->visualizar(modo);
 
+  glDisable(GL_LIGHTING);
 }
 
 Escena::Escena() {
@@ -74,18 +77,17 @@ Lata::Lata() {
 }
 
 LateralLata::LateralLata() {
-  agregar(new MallaRevol("../plys/lata-pcue.ply", 20, true, false));
+  agregar(new MallaRevol("lata-pcue.ply", 40, true, false));
 }
 
 BaseInfLata::BaseInfLata() {
-  agregar(new MallaRevol("../plys/lata-pinf.ply", 20, false));
+  agregar(new MallaRevol("lata-pinf.ply", 40, false));
 }
 
 BaseSupLata::BaseSupLata() {
-  //agregar(MAT_Traslacion(0, 0.025, 0));
-  agregar(new MallaRevol("../plys/lata-psup.ply", 20, false));
+  agregar(new MallaRevol("lata-psup.ply", 40, false));
 }
 
 Peon::Peon(bool usar_textura) {
-  agregar(new MallaRevol("../plys/peon.ply", 20, usar_textura));
+  agregar(new MallaRevol("../plys/peon.ply", 40, usar_textura));
 }
