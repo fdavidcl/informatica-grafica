@@ -39,12 +39,14 @@ void FuenteLuz::activar(int i) {
 FuentePosicional::FuentePosicional(int index, const Tupla3f& posicion)
   :FuenteLuz(index, 0, 0, Tupla4f(posicion(X), posicion(Y), posicion(Z), 1)) {
   for (int i = 0; i < 3; i++)
+    // Luz azulada
     colores[i] = Tupla4f(0.5, 0.7, 0.8, 1);
 }
 
 FuenteDireccional::FuenteDireccional(int index, float longi, float lati)
   :FuenteLuz(index, longi, lati, Tupla4f(0, 0, 0, 0)) {
   for (int i = 0; i < 3; i++)
+    // Luz blanca
     colores[i] = Tupla4f(0.7, 0.7, 0.7, 1);
 }
 
