@@ -23,14 +23,14 @@ void NodoGrafoEscena::visualizar(ContextoVis cv) {
     } else if (entradas[i].tipoE == 2) {
       if (entradas[i].material != cv.materialActivo) {
         cv.materialActivo = entradas[i].material;
-        entradas[i].material->activar();
+        cv.materialActivo->activar();
       }
     }
   }
 
   // Recupera material inicial
   if (materialActivoInicial != cv.materialActivo) {
-    cv.materialActivo = entradas[i].material;
+    cv.materialActivo = materialActivoInicial;
 
     if (cv.materialActivo != NULL)
       cv.materialActivo->activar();
