@@ -20,7 +20,7 @@ public:
   FuenteLuz(int index, float longi, float lati, Tupla4f posvec)
     :index(index), longi(longi), lati(lati), posvec(posvec) {}
 
-  void activar(int i); // activa la fuente de luz (con número GL_LIGHT0+i)
+  void activar(); // activa la fuente de luz (con número GL_LIGHT0+i)
 };
 
 // ---------------------------------------------------------------------

@@ -9,19 +9,19 @@ void ColeccionFL::activar() {
   glLightModeli(GL_LIGHT_MODEL_LOCAL_VIEWER, GL_TRUE);
 
   for (unsigned f = 0; f < fuentes.size(); ++f) {
-    fuentes.at(f)->activar(f);
+    fuentes.at(f)->activar();
   }
 }
 
-void FuenteLuz::activar(int i) {
-  glEnable(GL_LIGHT0 + i);
+void FuenteLuz::activar() {
+  glEnable(GL_LIGHT0 + index);
 
-  glLightfv(GL_LIGHT0 + i, GL_AMBIENT, colores[0]);
-  glLightfv(GL_LIGHT0 + i, GL_DIFFUSE, colores[1]);
-  glLightfv(GL_LIGHT0 + i, GL_SPECULAR, colores[2]);
+  glLightfv(GL_LIGHT0 + index, GL_AMBIENT, colores[0]);
+  glLightfv(GL_LIGHT0 + index, GL_DIFFUSE, colores[1]);
+  glLightfv(GL_LIGHT0 + index, GL_SPECULAR, colores[2]);
 
   if (posvec[3] == 1) { // => posicional
-    glLightfv(GL_LIGHT0 + i, GL_POSITION, posvec);
+    glLightfv(GL_LIGHT0 + index, GL_POSITION, posvec);
   } else {
     // Entramos en la modelview
     glMatrixMode(GL_MODELVIEW);
@@ -30,7 +30,7 @@ void FuenteLuz::activar(int i) {
 
     glRotatef(longi, 0.0, 1.0, 0.0);
     glRotatef(lati, -1.0, 0.0, 0.0);
-    glLightfv(GL_LIGHT0 + i, GL_POSITION, Tupla4f(0, 0, 1, 0));
+    glLightfv(GL_LIGHT0 + index, GL_POSITION, Tupla4f(0, 0, 1, 0));
 
     glPopMatrix();
   }
@@ -56,7 +56,7 @@ void FuenteDireccional::variarAngulo(unsigned angulo, float incremento) {
   else
     lati += incremento;
 
-  activar(index);
+  activar();
 }
 
 ColeccionFuentesP4::ColeccionFuentesP4() {
