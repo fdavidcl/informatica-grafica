@@ -66,7 +66,7 @@ CuerpoR2::CuerpoR2() {
   agregar(MAT_Escalado(1, 1.2, 1));
   agregar(MAT_Rotacion(90, 0, 1, 0));
   agregar(new MaterialCuerpoR2());
-  agregar(new MallaRevol("perfil_cilindro.ply", 50, true));
+  agregar(new MallaRevol("perfil_cilindro.ply", 50, true, true, true));
 }
 
 BrazoSuperior::BrazoSuperior() {

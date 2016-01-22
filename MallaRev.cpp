@@ -68,7 +68,7 @@ void MallaRevol::construir(unsigned num_perfiles, bool base_inferior, bool base_
   calcularNormales();
 }
 
-void MallaRevol::generar_coords_textura() {
+void MallaRevol::generar_coords_textura(bool invertir) {
   unsigned v_por_perfil = perfil.size()/3,
     total_perfiles = vertex_coords.size() / v_por_perfil;
 
@@ -78,26 +78,31 @@ void MallaRevol::generar_coords_textura() {
 
   alturas.push_back(0);
   for (unsigned j = 1; j < v_por_perfil; ++j) {
-    alturas.push_back((vertex_coords.at(j)(Y) - perfil.at(1))/norma);
+    float t = (vertex_coords.at(j)(Y) - perfil.at(1))/norma;
+    if (invertir) t = 1 - t;
+    alturas.push_back(t);
   }
 
   // Calculamos las coordenadas de textura
   for (unsigned i = 0; i < total_perfiles; i++) {
+    float s = i / (float)(total_perfiles - 1);
+    if (invertir) s = 1 - s;
+
     for (unsigned j = 0; j < alturas.size(); ++j) {
       text_coords.push_back(Tupla2f(
-        i / (float)(total_perfiles - 1),
+        s,
         alturas.at(j)
       ));
     }
   }
 }
 
-MallaRevol::MallaRevol(const char * filename, unsigned num_perfiles, bool usar_textura, bool base_inferior, bool base_superior, std::string nombre) {
+MallaRevol::MallaRevol(const char * filename, unsigned num_perfiles, bool base_inferior, bool base_superior, bool usar_textura, bool invertir_textura, std::string nombre) {
   nombre_obj = nombre;
 
   ply::read_vertices(filename, perfil);
   construir(num_perfiles, base_inferior, base_superior);
 
   if (usar_textura)
-    generar_coords_textura();
+    generar_coords_textura(invertir_textura);
 }

@@ -69,15 +69,15 @@ Lata::Lata() {
   agregar(new BaseSupLata());
 
   agregar(MAT_Rotacion(90, 0, 1, 0));
-  agregar(MAT_Traslacion(0, 0.03 + 1.03/2, 0));
-  agregar(MAT_Rotacion(180, 1, 0, 0));
-  agregar(MAT_Traslacion(0, -(0.03 + 1.03/2), 0));
   agregar(new MaterialLata());
   agregar(new LateralLata());
 }
 
 LateralLata::LateralLata() {
-  agregar(new MallaRevol("lata-pcue.ply", 40, true, false));
+  // La malla de revolución para el cuerpo de la lata la
+  // generamos sin bases y con una textura, invirtiendo
+  // el cálculo de las coordenadas de textura:
+  agregar(new MallaRevol("lata-pcue.ply", 40, false, false, true, true));
 }
 
 BaseInfLata::BaseInfLata() {
