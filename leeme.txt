@@ -48,7 +48,7 @@ Extensiones
    práctica 3: el cuerpo del R2 adquiere una textura a partir de la imagen
    'r2d2.jpg' incluida, y el resto del robot utiliza varios materiales.
 
-   Se mantiene la iluminacion creada en la práctica 4 en esta práctica también.
+   Se utiliza la misma iluminacion de la práctica 4 en esta práctica también.
 
 ## Práctica 3
  * No se ha implementado la animación del objeto.
