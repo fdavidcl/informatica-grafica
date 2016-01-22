@@ -31,8 +31,10 @@ void MallaInd::visualizar(ContextoVis cv) {
     glEnable(GL_LIGHTING);
     glShadeModel(GL_FLAT);
 
-    glTexCoordPointer(2, GL_FLOAT, 0, &text_coords.front());
-    glEnableClientState(GL_TEXTURE_COORD_ARRAY);
+    if (!text_coords.empty()) {
+      glTexCoordPointer(2, GL_FLOAT, 0, &text_coords.front());
+      glEnableClientState(GL_TEXTURE_COORD_ARRAY);
+    }
 
     if (!normales_vertices.empty()) {
       glNormalPointer(GL_FLOAT, 0, &normales_vertices.front());
@@ -49,8 +51,10 @@ void MallaInd::visualizar(ContextoVis cv) {
     glEnable(GL_LIGHTING);
     glShadeModel(GL_SMOOTH);
 
-    glTexCoordPointer(2, GL_FLOAT, 0, &text_coords.front());
-    glEnableClientState(GL_TEXTURE_COORD_ARRAY);
+    if (!text_coords.empty()) {
+      glTexCoordPointer(2, GL_FLOAT, 0, &text_coords.front());
+      glEnableClientState(GL_TEXTURE_COORD_ARRAY);
+    }
 
     if (!normales_vertices.empty()) {
       glNormalPointer(GL_FLOAT, 0, &normales_vertices.front());

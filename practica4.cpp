@@ -44,12 +44,15 @@ void P4_DibujarObjetos(ContextoVis modo) {
 
 Escena::Escena() {
   agregar(new Lata());
+
+  //agregar(new MaterialPeonMadera());
   agregar(MAT_Traslacion(-3, 1.4, 3));
-  agregar(new MaterialPeonMadera());
   agregar(new Peon(true));
+
   agregar(new MaterialPeonBlanco());
   agregar(MAT_Traslacion(3, 0, 0));
   agregar(new Peon());
+
   agregar(new MaterialPeonNegro());
   agregar(MAT_Traslacion(3, 0, 0));
   agregar(new Peon());
@@ -57,16 +60,21 @@ Escena::Escena() {
 
 Lata::Lata() {
   agregar(MAT_Escalado(4, 4, 4));
-  agregar(new MaterialLata());
-  agregar(new LateralLata());
+
   agregar(new MaterialTapasLata());
   agregar(new BaseInfLata());
-  agregar(MAT_Traslacion(0, 0.025, 0));
   agregar(new BaseSupLata());
+
+  agregar(MAT_Rotacion(90, 0, 1, 0));
+  agregar(MAT_Traslacion(0, 0.03 + 1.03/2, 0));
+  agregar(MAT_Rotacion(180, 1, 0, 0));
+  agregar(MAT_Traslacion(0, -(0.03 + 1.03/2), 0));
+  agregar(new MaterialLata());
+  agregar(new LateralLata());
 }
 
 LateralLata::LateralLata() {
-  agregar(new MallaRevol("../plys/lata-pcue.ply", 20, true));
+  agregar(new MallaRevol("../plys/lata-pcue.ply", 20, true, false));
 }
 
 BaseInfLata::BaseInfLata() {
@@ -74,6 +82,7 @@ BaseInfLata::BaseInfLata() {
 }
 
 BaseSupLata::BaseSupLata() {
+  //agregar(MAT_Traslacion(0, 0.025, 0));
   agregar(new MallaRevol("../plys/lata-psup.ply", 20, false));
 }
 

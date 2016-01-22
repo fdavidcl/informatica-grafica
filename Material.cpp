@@ -10,8 +10,6 @@ void MaterialEstandar::activar() {
   glLightModeli(GL_LIGHT_MODEL_COLOR_CONTROL, GL_SEPARATE_SPECULAR_COLOR);
   glLightModeli(GL_LIGHT_MODEL_LOCAL_VIEWER, GL_TRUE);
 
-  // GLfloat color_ambiente[4] = {0, 0, 0, 1.0};
-  // glLightModelf(GL_LIGHT_MODEL_AMBIENT, color_ambiente);
   glMaterialfv(GL_FRONT_AND_BACK, GL_EMISSION, color[0]);
   glMaterialfv(GL_FRONT_AND_BACK, GL_AMBIENT, color[1]);
   glMaterialfv(GL_FRONT_AND_BACK, GL_DIFFUSE, color[2]);
@@ -25,6 +23,7 @@ void MaterialEstandar::activar() {
   glColorMaterial(GL_FRONT_AND_BACK, GL_AMBIENT_AND_DIFFUSE);
 
   if (text != NULL) {
+    //std::cerr << "Habemus textura!" << std::endl << std::flush;
     text->activar();
   }
 }
@@ -66,23 +65,27 @@ void Textura::activar() {
 Textura::Textura(const std::string& archivoJPG, unsigned mgct) :mgct(mgct) {
   img = new jpg::Imagen(archivoJPG);
 
-  if (mgct != 0) {
-    cs[0] = ct[1] = 1;
-    cs[1] = cs[2] = cs[3] = ct[0] = ct[2] = ct[3] = 0;
-  }
+  cs[0] = ct[2] = 1;
+  cs[1] = cs[2] = cs[3] = ct[0] = ct[1] = ct[3] = 0;
 
   glGenTextures(1, &id_text);
   glBindTexture(GL_TEXTURE_2D, id_text);
 
+  /*
   glTexImage2D(
     GL_TEXTURE_2D,
     0,
-    GL_RGB, // o 3
-    img->tamX(),
-    img->tamY(),
-    0,
     GL_RGB,
-    GL_UNSIGNED_BYTE,
+    img->tamX(), img->tamY(),
+    0, GL_RGB, GL_UNSIGNED_BYTE,
+    img->leerPixels()
+  );*/
+
+  gluBuild2DMipmaps(
+    GL_TEXTURE_2D,
+    GL_RGB,
+    img->tamX(), img->tamY(),
+    GL_RGB, GL_UNSIGNED_BYTE,
     img->leerPixels()
   );
 
@@ -104,11 +107,12 @@ MaterialLata::MaterialLata() {
 }
 
 MaterialTapasLata::MaterialTapasLata() {
+  text = NULL;
 
   Tupla4f blanco(1, 1, 1, 1);
-  color[0] = blanco * 0.8;
-  color[1] = blanco * 0.1;
-  color[2] = blanco * 0.3;
+  color[0] = blanco * 0.6;
+  color[1] = blanco * 0.05;
+  color[2] = blanco * 0.2;
   color[3] = blanco * 0.7;
   exponente = 5;
 }
@@ -125,6 +129,7 @@ MaterialPeonMadera::MaterialPeonMadera() {
 }
 
 MaterialPeonBlanco::MaterialPeonBlanco() {
+  text = NULL;
 
   Tupla4f blanco(1, 1, 1, 1);
   color[0] = blanco * 0.8;
@@ -135,6 +140,7 @@ MaterialPeonBlanco::MaterialPeonBlanco() {
 }
 
 MaterialPeonNegro::MaterialPeonNegro() {
+  text = NULL;
 
   Tupla4f blanco(1, 1, 1, 1);
   color[0] = blanco * 0.001;

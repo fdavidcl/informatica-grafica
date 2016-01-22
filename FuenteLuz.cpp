@@ -8,7 +8,7 @@ void ColeccionFL::activar() {
   glLightModeli(GL_LIGHT_MODEL_COLOR_CONTROL, GL_SEPARATE_SPECULAR_COLOR);
   glLightModeli(GL_LIGHT_MODEL_LOCAL_VIEWER, GL_TRUE);
 
-  for (int f = 0; f < fuentes.size(); ++f) {
+  for (unsigned f = 0; f < fuentes.size(); ++f) {
     fuentes.at(f)->activar(f);
   }
 }
