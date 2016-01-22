@@ -28,7 +28,6 @@ void MallaInd::visualizar(ContextoVis cv) {
       glDrawElements(GL_TRIANGLES, 3, GL_UNSIGNED_INT, &indexes[i]);
     }
   } else if (cv.modo_vis == 4) {
-    glEnable(GL_LIGHTING);
     glShadeModel(GL_FLAT);
 
     if (!text_coords.empty()) {
@@ -46,9 +45,7 @@ void MallaInd::visualizar(ContextoVis cv) {
     glDisableClientState(GL_TEXTURE_COORD_ARRAY);
     glDisableClientState(GL_NORMAL_ARRAY);
 
-    glDisable(GL_LIGHTING);
   } else if (cv.modo_vis == 5) {
-    glEnable(GL_LIGHTING);
     glShadeModel(GL_SMOOTH);
 
     if (!text_coords.empty()) {
@@ -65,8 +62,6 @@ void MallaInd::visualizar(ContextoVis cv) {
 
     glDisableClientState(GL_TEXTURE_COORD_ARRAY);
     glDisableClientState(GL_NORMAL_ARRAY);
-
-    glDisable(GL_LIGHTING);
   }
 
   glDisableClientState(GL_VERTEX_ARRAY);
