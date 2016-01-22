@@ -67,4 +67,19 @@ public:
   MaterialPeonNegro();
 };
 
+class MaterialBaseR2 : public MaterialEstandar {
+public:
+  MaterialBaseR2();
+};
+
+class MaterialAzulR2 : public MaterialEstandar {
+public:
+  MaterialAzulR2();
+};
+
+class MaterialCuerpoR2 : public MaterialEstandar {
+public:
+  MaterialCuerpoR2();
+};
+
 #endif

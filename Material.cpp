@@ -6,6 +6,7 @@ void MaterialEstandar::activar() {
   glEnable(GL_LIGHTING);
   glEnable(GL_NORMALIZE);
   glDisable(GL_COLOR_MATERIAL);
+
   glLightModeli(GL_LIGHT_MODEL_TWO_SIDE, GL_FALSE);
   glLightModeli(GL_LIGHT_MODEL_COLOR_CONTROL, GL_SEPARATE_SPECULAR_COLOR);
   glLightModeli(GL_LIGHT_MODEL_LOCAL_VIEWER, GL_TRUE);
@@ -104,7 +105,7 @@ MaterialLata::MaterialLata() {
   color[1] = blanco * 0.1;
   color[2] = blanco * 0.3;
   color[3] = blanco * 0.7;
-  exponente = 5;
+  exponente = 3;
 }
 
 MaterialTapasLata::MaterialTapasLata() {
@@ -115,7 +116,7 @@ MaterialTapasLata::MaterialTapasLata() {
   color[1] = blanco * 0.05;
   color[2] = blanco * 0.2;
   color[3] = blanco * 0.7;
-  exponente = 5;
+  exponente = 3;
 }
 
 MaterialPeonMadera::MaterialPeonMadera() {
@@ -126,7 +127,7 @@ MaterialPeonMadera::MaterialPeonMadera() {
   color[1] = blanco * 0.1;
   color[2] = blanco * 0.3;
   color[3] = blanco * 0.7;
-  exponente = 5;
+  exponente = 3;
 }
 
 MaterialPeonBlanco::MaterialPeonBlanco() {
@@ -137,16 +138,49 @@ MaterialPeonBlanco::MaterialPeonBlanco() {
   color[1] = blanco * 0.05;
   color[2] = blanco * 0.2;
   color[3] = blanco * 0.0;
-  exponente = 5;
+  exponente = 3;
 }
 
 MaterialPeonNegro::MaterialPeonNegro() {
   text = NULL;
 
   Tupla4f blanco(1, 1, 1, 1);
-  color[0] = blanco * 0.001;
+  color[0] = blanco * 0.005;
   color[1] = blanco * 0.0;
   color[2] = blanco * 0.01;
+  color[3] = blanco * 0.75;
+  exponente = 3;
+}
+
+MaterialBaseR2::MaterialBaseR2() {
+  text = NULL;
+
+  Tupla4f blanco(1, 1, 1, 1);
+  color[0] = blanco * 0.7;
+  color[1] = blanco * 0.05;
+  color[2] = blanco * 0.2;
+  color[3] = blanco * 0.0;
+  exponente = 3;
+}
+
+MaterialAzulR2::MaterialAzulR2() {
+  text = NULL;
+
+  Tupla4f azul(0.0, .2, 0.4, 1);
+  color[0] = azul * 0.7;
+  color[1] = azul * 0.05;
+  color[2] = azul * 0.2;
+  color[3] = azul * 0.0;
+  exponente = 3;
+}
+
+MaterialCuerpoR2::MaterialCuerpoR2() {
+  text = new Textura("r2d2.jpg", 0);
+
+  Tupla4f blanco(1, 1, 1, 1);
+  color[0] = blanco * 0.8;
+  color[1] = blanco * 0.1;
+  color[2] = blanco * 0.3;
   color[3] = blanco * 0.7;
-  exponente = 5;
+  exponente = 3;
 }
