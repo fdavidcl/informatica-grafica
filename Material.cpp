@@ -23,8 +23,9 @@ void MaterialEstandar::activar() {
   glColorMaterial(GL_FRONT_AND_BACK, GL_AMBIENT_AND_DIFFUSE);
 
   if (text != NULL) {
-    //std::cerr << "Habemus textura!" << std::endl << std::flush;
     text->activar();
+  } else {
+    glDisable(GL_TEXTURE_2D);
   }
 }
 

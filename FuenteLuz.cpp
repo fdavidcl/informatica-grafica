@@ -62,6 +62,6 @@ ColeccionFuentesP4::ColeccionFuentesP4() {
     new FuenteDireccional(0, 0, 0)
   );
   fuentes.push_back(
-    new FuentePosicional(1, Tupla3f(2, 10, 3))
+    new FuentePosicional(1, Tupla3f(5, 5, 0))
   );
 }

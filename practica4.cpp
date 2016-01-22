@@ -45,7 +45,7 @@ void P4_DibujarObjetos(ContextoVis modo) {
 Escena::Escena() {
   agregar(new Lata());
 
-  //agregar(new MaterialPeonMadera());
+  agregar(new MaterialPeonMadera());
   agregar(MAT_Traslacion(-3, 1.4, 3));
   agregar(new Peon(true));
 
